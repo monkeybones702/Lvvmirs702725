@@ -1,0 +1,93 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile stored at /users/{userId}",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ResearchTask": {
+      "title": "ResearchTask",
+      "description": "Autonomous research task stored under /users/{userId}/tasks/{taskId}",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "targetWebsite": { "type": "string" },
+        "objective": { "type": "string" },
+        "authProfile": { "type": "string" },
+        "priority": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "targetWebsite", "objective", "status"]
+    },
+    "VehicleRecord": {
+      "title": "VehicleRecord",
+      "description": "Identified vehicle record with license plate, make, model, BOLO alert state and camera tracking sightings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "licensePlate": { "type": "string" },
+        "state": { "type": "string" },
+        "make": { "type": "string" },
+        "model": { "type": "string" },
+        "color": { "type": "string" },
+        "year": { "type": "number" },
+        "bodyType": { "type": "string" },
+        "boloStatus": { "type": "string", "enum": ["none", "active_bolo", "stolen", "traffic_alert", "amber_alert"] },
+        "boloNotes": { "type": "string" },
+        "lastDetectedAt": { "type": "string" },
+        "currentCorridor": { "type": "string" },
+        "currentCameraId": { "type": "string" },
+        "currentSpeedMph": { "type": "number" },
+        "heading": { "type": "string" }
+      },
+      "required": ["id", "licensePlate", "make", "model", "color", "boloStatus"]
+    },
+    "LiveLocation": {
+      "title": "LiveLocation",
+      "description": "Real-time live location and presence beacon shared by an authenticated Google user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "address": { "type": "string" },
+        "status": { "type": "string" },
+        "speedMph": { "type": "number" },
+        "batteryLevel": { "type": "number" },
+        "isLive": { "type": "boolean" },
+        "lastSeen": { "type": "string" }
+      },
+      "required": ["userId", "email", "lat", "lng", "isLive"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data accessible by the authenticated owner"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "ResearchTask",
+      "description": "Research tasks owned by the authenticated user"
+    },
+    "/vehicles/{vehicleId}": {
+      "schema": "VehicleRecord",
+      "description": "Corridor-wide vehicle identification and BOLO tracking records"
+    },
+    "/live_locations/{userId}": {
+      "schema": "LiveLocation",
+      "description": "Live GPS location beacons shared by authenticated Google users and contacts"
+    }
+  }
+}

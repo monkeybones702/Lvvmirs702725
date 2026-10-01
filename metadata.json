@@ -1,0 +1,6 @@
+{
+  "name": "Agent Litmus Test: Research Task Manager",
+  "description": "Las Vegas Valley neighborhood & social media aggregator featuring NV FAST CCTV scanning (bugatti.nvfast.org), push notifications, historical trends dashboard, predictive alerting, voice memo logging, and spatial safety heat map.",
+  "requestFramePermissions": ["geolocation", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
